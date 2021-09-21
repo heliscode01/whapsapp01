@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="whatsapp_sales_template" model="mail.template">
+        <field name="name">Ventas: Confirmar Orden</field>
+        <field name="subject">Confirmar Ventas</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p> Hola ${object.partner_id.name or ''},</p>
+        Su número de Orden ${object.name} con monto ${format_amount(object.amount_total, object.currency_id)} es Confirmado.
+        <br>
+        La fecha y hora de su pedido es "${object.date_order}"
+        <br>
+        Si tiene alguna pregunta, no dude en ponerse en contacto con nosotros.
+        <br>
+        ]]>
+        </field>
+    </record>
+
+    <record id="whatsapp_purchase_template" model="mail.template">
+        <field name="name">Compra: Confirmar pedido</field>
+        <field name="subject">Orden de compra </field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Querido(a) ${object.partner_id.name}
+                % if object.partner_id.parent_id:
+                    (${object.partner_id.parent_id.name})
+                % endif
+                <br/><br/>
+                Se trata de la orden de compra <strong>${object.name}</strong>
+                % if object.partner_ref:
+                    with reference: ${object.partner_ref}
+                % endif
+                con monto ${format_amount(object.amount_total, object.currency_id)}
+                de ${object.company_id.name}.
+                <br/>
+                La fecha y hora del pedido es "${object.date_approve}"
+                <br/>
+                Si tiene alguna pregunta, no dude en ponerse en contacto con nosotros.
+                <br/><br/>
+                Atentamente,
+            </p>
+        ]]>
+
+        </field>
+    </record>
+
+    <record id="whatsapp_invoice_template" model="mail.template">
+        <field name="name">Factura: Enviar por WhatsApp</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="subject">Orden de compra</field>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Querida
+                % if object.partner_id.parent_id:
+                    ${object.partner_id.name} (${object.partner_id.parent_id.name}),
+                % else:
+                    ${object.partner_id.name},
+                % endif
+                <br /><br />
+                Aquí está su
+                % if object.name:
+                    factura ${object.name}
+                % else:
+                    factura
+                %endif
+                % if object.invoice_origin:
+                    (con referencia: ${object.invoice_origin})
+                % endif
+                con monto ${format_amount(object.amount_total, object.currency_id)}
+                de ${object.company_id.name}.
+                % if object.payment_state == 'paid':
+                    Esta factura ya está pagada.
+                % else:
+                    Por favor remita el pago a su más pronta conveniencia.
+                % endif
+                <br />
+                La fecha y hora de la factura es "${object.invoice_date}"
+                <br />
+                No dude en contactarnos si tiene alguna pregunta.
+                % if object.invoice_user_id.signature:
+                    <br />
+                    ${object.invoice_user_id.signature | safe}
+                % endif
+                </p>
+        ]]>
+        </field>
+    </record>
+</odoo>
