@@ -59,7 +59,7 @@
                     ${object.partner_id.name},
                 % endif
                 <br /><br />
-                Aquí está su
+                Aqui esta su
                 % if object.name:
                     factura ${object.name}
                 % else:
@@ -73,7 +73,7 @@
                 % if object.payment_state == 'paid':
                     Esta factura ya esta pagada.
                 % else:
-                    Por favor remita el pago a su más pronta conveniencia.
+                    Por favor remita el pago a su mas pronta conveniencia.
                 % endif
                 <br />
                 La fecha y hora de la factura es "${object.invoice_date}"
