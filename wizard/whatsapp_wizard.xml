@@ -14,7 +14,7 @@
                         </group>
                         <field name="model" invisible="1"/>
                         <group>
-                            <label for="mobile_number" string="Whatsapp Numbero" style="margin-left:25px !important;width:120px !important"/>
+                            <label for="mobile_number" string="N. Whatsapp" style="margin-left:25px !important;width:120px !important"/>
                             <field name="mobile_number" nolabel="1"/>
                             <field name="template_id" options="{'no_create': True, 'no_edit': True}" invisible="1"/>
                         </group>
